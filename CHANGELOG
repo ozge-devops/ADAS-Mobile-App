@@ -1,0 +1,43 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.0] - 2026-03-03
+
+### Added
+- Project architecture setup (MVVM + Clean Architecture)
+- Hilt dependency injection configuration
+- Room database with Trip, RoutePoint, and Alert entities
+- OBD-II Bluetooth connection manager (ELM327 protocol)
+- Phone sensor reader (accelerometer + gyroscope)
+- Sensor fusion engine combining OBD-II and phone data
+- Dashboard screen with real-time speed gauge
+- Connection screen with Bluetooth device scanning
+- Trip history screen with driving scores
+- Trip detail screen with score breakdown
+- Settings screen with configurable thresholds
+- Profile screen with aggregate statistics
+- Speed monitoring use case with configurable limits
+- Harsh braking detection use case
+- Fatigue monitoring use case (progressive alerts at 90/120/150 min)
+- Driving score calculation algorithm (weighted: speed 30%, braking 25%, acceleration 20%, duration 15%, fuel 10%)
+- Alert notification system with sound and vibration
+- Foreground service for background data collection
+- Material 3 theming with light/dark mode support
+- Navigation with Jetpack Compose Navigation
+- Unit tests for driving score and fatigue monitoring
+- GitHub Actions CI pipeline
+- Project documentation (README, CONTRIBUTING, CHANGELOG)
+
+## [Unreleased]
+
+### Planned
+- Live map view with route tracking
+- Google Places API integration for rest stop suggestions
+- Trip route replay on map
+- Export trip data as PDF report
+- Widget for home screen speed display
+- Turkish language localization improvements
