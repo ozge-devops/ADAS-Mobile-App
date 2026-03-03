@@ -1,0 +1,40 @@
+# Contributing to Retrofit ADAS
+
+Thank you for your interest in contributing to Retrofit ADAS! This project is developed as an undergraduate thesis, but we welcome feedback, bug reports, and suggestions.
+
+## How to Contribute
+
+### Reporting Bugs
+1. Check if the issue already exists in [Issues](https://github.com/ozge-devops/retrofit-adas-app/issues)
+2. Create a new issue with a clear title and description
+3. Include steps to reproduce, expected behavior, and actual behavior
+4. Add device info (Android version, phone model, OBD-II adapter model)
+
+### Suggesting Features
+1. Open an issue with the `enhancement` label
+2. Describe the feature and its use case
+3. Explain why it would benefit drivers
+
+### Code Contributions
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Follow the code style (MVVM + Clean Architecture)
+4. Write tests for new functionality
+5. Submit a Pull Request
+
+## Code Style
+- **Language:** Kotlin
+- **Architecture:** MVVM + Clean Architecture
+- **DI:** Hilt
+- **UI:** Jetpack Compose
+- **Naming:** camelCase for functions, PascalCase for classes
+- **Comments:** KDoc for public APIs
+
+## Branch Naming
+- `feature/` — new features
+- `bugfix/` — bug fixes
+- `docs/` — documentation changes
+- `test/` — test additions
+
+## Questions?
+Feel free to open an issue or reach out to [@ozge-devops](https://github.com/ozge-devops).
