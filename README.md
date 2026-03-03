@@ -364,7 +364,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 **Özge Zelal Küçük**
 - GitHub: [@ozge-devops](https://github.com/ozge-devops)
-
+MY ADVİSOR  PROF. ALİ GÜNEŞ
 ---
 
 <p align="center">
