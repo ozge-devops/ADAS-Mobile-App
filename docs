@@ -1,0 +1,123 @@
+# Architecture Documentation
+
+## System Overview
+
+Retrofit ADAS follows **MVVM + Clean Architecture** pattern, separating concerns into three distinct layers.
+
+## Layer Diagram
+
+```mermaid
+graph TB
+    subgraph Presentation["Presentation Layer"]
+        UI[Jetpack Compose Screens]
+        VM[ViewModels]
+        NAV[Navigation]
+    end
+
+    subgraph Domain["Domain Layer"]
+        UC[Use Cases]
+        MOD[Domain Models]
+        REPO_I[Repository Interfaces]
+    end
+
+    subgraph Data["Data Layer"]
+        REPO_IMPL[Repository Implementations]
+        OBD[OBD-II Connection Manager]
+        SENSOR[Sensor Reader]
+        FUSION[Sensor Fusion Engine]
+        DB[Room Database]
+    end
+
+    subgraph External["External"]
+        BT[Bluetooth / ELM327]
+        PHONE[Phone Sensors]
+        GPS[GPS / Location]
+    end
+
+    UI --> VM
+    VM --> UC
+    UC --> REPO_I
+    REPO_I -.-> REPO_IMPL
+    REPO_IMPL --> OBD
+    REPO_IMPL --> DB
+    OBD --> BT
+    SENSOR --> PHONE
+    FUSION --> OBD
+    FUSION --> SENSOR
+    FUSION --> GPS
+```
+
+## Data Flow
+
+```mermaid
+sequenceDiagram
+    participant V as Vehicle (OBD-II)
+    participant BT as Bluetooth
+    participant OBD as ObdConnectionManager
+    participant SF as SensorFusionEngine
+    participant UC as Use Cases
+    participant VM as DashboardViewModel
+    participant UI as DashboardScreen
+
+    V->>BT: Raw OBD Data
+    BT->>OBD: ELM327 Response
+    OBD->>OBD: Parse PIDs (Speed, RPM, Temp)
+    OBD->>SF: VehicleData Flow
+    SF->>SF: Combine with Accelerometer
+    SF->>UC: FusedData Flow
+    UC->>UC: Check Speed Limit
+    UC->>UC: Detect Harsh Braking
+    UC->>VM: Alert / VehicleData
+    VM->>UI: UiState Update
+    UI->>UI: Recompose (Speed Gauge, Alerts)
+```
+
+## Module Dependency Graph
+
+```mermaid
+graph LR
+    APP[AdasApplication] --> DI[Hilt Modules]
+    DI --> DB_MOD[DatabaseModule]
+    DI --> REPO_MOD[RepositoryModule]
+
+    DB_MOD --> ROOM[AdasDatabase]
+    REPO_MOD --> V_REPO[VehicleRepositoryImpl]
+    REPO_MOD --> T_REPO[TripRepositoryImpl]
+    REPO_MOD --> A_REPO[AlertRepositoryImpl]
+
+    V_REPO --> OBD_MGR[ObdConnectionManager]
+    T_REPO --> ROOM
+    A_REPO --> ROOM
+
+    DASH_VM[DashboardViewModel] --> SPEED_UC[MonitorSpeedUseCase]
+    DASH_VM --> BRAKE_UC[DetectHarshBrakingUseCase]
+    DASH_VM --> FATIGUE_UC[MonitorFatigueUseCase]
+    DASH_VM --> SCORE_UC[CalculateDrivingScoreUseCase]
+```
+
+## Driving Score Algorithm
+
+| Component | Weight | Scoring Logic |
+|-----------|--------|---------------|
+| Speed Compliance | 30% | (1 - violations/total_readings) × 100 |
+| Braking Smoothness | 25% | 0 events=100, ≤2=80, ≤5=60, >5=30 |
+| Acceleration Patterns | 20% | 0 events=100, ≤3=75, >3=40 |
+| Trip Duration | 15% | ≤90min=100, ≤120=80, ≤150=50, >150=20 |
+| Fuel Efficiency | 10% | ≤6L/100km=100, ≤8=80, ≤10=60, >10=40 |
+
+## OBD-II PIDs Used
+
+| PID | Description | Formula | Unit |
+|-----|-------------|---------|------|
+| 0x0D | Vehicle Speed | A | km/h |
+| 0x0C | Engine RPM | ((A×256)+B)/4 | rpm |
+| 0x05 | Coolant Temp | A - 40 | °C |
+| 0x11 | Throttle Position | (A×100)/255 | % |
+
+## Alert Severity Levels
+
+| Level | Trigger | Action |
+|-------|---------|--------|
+| INFO | 90min driving, speed +10 over limit | Notification |
+| WARNING | 120min driving, speed +20, harsh braking | Notification + Vibration |
+| CRITICAL | 150min driving, speed +30 over limit | Notification + Long Vibration + Sound |
