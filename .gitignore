@@ -19,7 +19,8 @@ release/
 # Gradle files
 .gradle/
 build/
-gradle/wrapper/gradle-wrapper.jar
+# Note: gradle-wrapper.jar is intentionally NOT ignored
+# It must be committed for CI/CD and first-time builds to work
 
 # Local configuration file
 local.properties
