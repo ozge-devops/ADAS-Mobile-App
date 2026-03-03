@@ -1,0 +1,9 @@
+# This file should NOT be committed to version control.
+# It contains local machine-specific paths and API keys.
+
+# Android SDK path (update for your machine)
+# sdk.dir=/Users/YOUR_NAME/Library/Android/sdk
+# sdk.dir=C:\\Users\\YOUR_NAME\\AppData\\Local\\Android\\Sdk
+
+# Google Maps API Key
+MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY_HERE
