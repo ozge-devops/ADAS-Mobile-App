@@ -1,4 +1,4 @@
-[README (1).md](https://github.com/user-attachments/files/25724798/README.1.md)
+
 # 🚗 Retrofit ADAS Mobile App
 
 > **Advanced Driver Assistance System for Non-ADAS Vehicles**
