@@ -1,7 +1,7 @@
 package com.ozge.adas
 
 import com.ozge.adas.domain.model.DrivingScore
-import com.ozge.adas.domain.usecase.CalculateDrivingScoreUseCase
+import com.ozge.adas.domain.usecase.CalculateDrivingScoreUseCase 
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
