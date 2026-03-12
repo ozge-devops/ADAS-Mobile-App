@@ -10,7 +10,7 @@ Retrofit ADAS follows **MVVM + Clean Architecture** pattern, separating concerns
 graph TB
     subgraph Presentation["Presentation Layer"]
         UI[Jetpack Compose Screens]
-        VM[ViewModels]
+        VM[ViewModels]     
         NAV[Navigation]
     end
 
